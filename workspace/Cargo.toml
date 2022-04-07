@@ -1,0 +1,14 @@
+[package]
+name = "test-workspace"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+external_lib = { path = "../external/external_lib" }
+member = { path = "member" }
+
+[workspace]
+# workspace members can not be hierarchically below the workspace root
+members = [".", "member", "binary"]
