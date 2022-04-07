@@ -8,6 +8,12 @@ Run _anywhere_ inside the `workspace` directory:
 cross run -p binary
 ```
 
+This should also work from the root directory:
+
+```
+cross run --manifest-path ./workspace/Cargo.toml -p binary
+```
+
 ## License
 
 Licensed under either of
