@@ -8,7 +8,51 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 external_lib = { path = "../external/external_lib" }
 member = { path = "member" }
+folder_lib1 = { optional = true, path = "folder/lib1" }
+folder_lib2 = { optional = true, path = "folder/lib2" }
+question_lib1 = { optional = true, path = "question/lib1" }
+recursive_include1 = { optional = true, path = "recursive/include1" }
+recursive_include2 = { optional = true, path = "recursive/include1/include2" }
+set_lib1 = { optional = true, path = "set/lib1" }
+set_libf = { optional = true, path = "set/libf" }
+wildcard_include = { optional = true, path = "wildcard/include" }
 
 [workspace]
 # workspace members can not be hierarchically below the workspace root
-members = [".", "member", "binary"]
+members = [
+    "member",
+    "binary",
+    "folder",
+    "folder/*",
+    "question/lib?",
+    "recursive/**",
+    "set/lib[0-9a-f]",
+    "wildcard/*",
+]
+exclude = [
+    # this exclude filter should be ignored, since we add `folder`
+    # and `folder/*` to the members, which overrides any exclude filters.
+    "folder/lib1",
+    "question/lib2",
+    "recursive/exclude1",
+    "recursive/include1/exclude2",
+    "set/libe",
+    "wildcard/exclude",
+]
+
+[features]
+dependencies = [
+    "folder_lib1",
+    "folder_lib2",
+    "question_lib1",
+    "recursive_include1",
+    "recursive_include2",
+    "set_lib1",
+    "set_libf",
+    "wildcard_include",
+]
+
+[[bin]]
+name = "dependencies"
+path = "bin/dependencies.rs"
+required-features = ["dependencies"]
